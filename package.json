@@ -1,0 +1,27 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "A Team Profile Generator Using Command Line User Input",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyndseyjw/team-profile-generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lyndseyjw/team-profile-generator/issues"
+  },
+  "homepage": "https://github.com/lyndseyjw/team-profile-generator#readme",
+  "dependencies": {
+    "inquirer": "^8.1.2",
+    "jest": "^27.1.1"
+  }
+}
