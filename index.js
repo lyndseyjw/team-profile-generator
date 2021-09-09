@@ -1,5 +1,5 @@
 const Employee = require('./lib/employee');
 
-const employee = new Employee();
+const employee = new Employee;
 
-employee.employeePrompt();
+employee.choicePrompt();
