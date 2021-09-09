@@ -1,29 +1,15 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-const Employee = require('./lib/employee');
 const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
 
-const employee = new Employee;
-
-employee.choicePrompt();
-
-const employeeArray = [];
-const managerArray = [];
-const engineerArray = [];
-const internArray = [];
+const teamArray = [];
 var choice = '';
 const html = ``
 
-class Employee {
-
-    constructor(name, id, email) {
-        this.name = name;
-        this.id = id;
-        this.email = email;
-    }
+class Request {
 
     choicePrompt() {
 
@@ -49,8 +35,7 @@ class Employee {
                 } else {
                     
                     choice = data.choice;
-                    const employee = new Employee;
-                    employee.employeePrompt();
+                    request.employeePrompt();
                     return choice;
                 }
             })
@@ -89,13 +74,10 @@ class Employee {
                             }
                         ])
                         .then(function(data) {
-
-                            const manager = [data.name, data.id, data.email, data.officeNumber];
-                            managerArray.push(manager);
-                            employeeArray.push(managerArray);
                             
-                            const employee = new Employee;
-                            employee.choicePrompt();
+                            const manager = new Manager(data.name, data.id, data.email, data.officeNumber);
+                            teamArray.push(manager);
+                            request.choicePrompt();
                         })
                     
                 } else if (choice === 'Engineer') {
@@ -109,13 +91,10 @@ class Employee {
                             }
                         ])
                         .then(function(data) {
-
-                            const engineer = [data.name, data.id, data.email, data.github];
-                            engineerArray.push(engineer);
-                            employeeArray.push(engineerArray);
                             
-                            const employee = new Employee;
-                            employee.choicePrompt();
+                            const engineer = new Engineer(data.name, data.id, data.email, data.github);
+                            teamArray.push(engineer);
+                            request.choicePrompt();
                         })
 
                 } else if (choice === 'Intern') {
@@ -129,15 +108,15 @@ class Employee {
                             }
                         ])
                         .then(function(data) {
-
-                            const intern = [data.name, data.id, data.email, data.github];
-                            internArray.push(intern);
-                            employeeArray.push(internArray);
                             
-                            const employee = new Employee;
-                            employee.choicePrompt();
+                            const intern = new Intern(data.name, data.id, data.email, data.github);
+                            teamArray.push(intern);
+                            request.choicePrompt();
                         })
                 }
             })
     }
 }
+
+const request = new Request();
+request.choicePrompt();
