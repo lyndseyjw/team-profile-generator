@@ -26,8 +26,6 @@ class Request {
 
                 if (data.choice === 'No More Employees To Add') {
 
-                    console.log(Employee);
-
                     var html = `<!DOCTYPE html>
 
                         <html lang="en">
@@ -51,28 +49,17 @@ class Request {
                                 <h1>MY TEAM</h1>
                             </header>
 
-                            <div class="card">
-                                <div class="heading">
-                                    <h2 class="name">${Engineer.name}</h2>
-                                    <h3 class="role">${data.role}</h3>
-                                </div>
-                                <hr>
-                                <div class="content">
-                                    <p class="id">ID : ${Engineer.id}</p>
-                                    <p class="email">Email : ${Engineer.email}</p>
-                                    <p class="ogs">Github : ${Engineer.github}</p>
-                                </div>
-                            </div>
+                            
 
                             <script src="../index.js"></script>
                         </body>
                         </html>`
 
-                    fs.writeFile('index.html', html, (err) =>
-                        err ? console.log(err) : console.log('Success!')
-                    );
-
-                    process.exit();
+                    if (html) {
+                        fs.writeFile('index.html', html, (err) =>
+                            err ? console.log(err) : console.log('Success!')
+                        );
+                    }
 
                 } else {
                     
