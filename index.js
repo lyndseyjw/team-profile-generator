@@ -26,7 +26,8 @@ class Request {
 
                 if (data.choice === 'No More Employees To Add') {
 
-                    var html = `<!DOCTYPE html>
+
+                    fs.writeFile('index.html', `<!DOCTYPE html>
 
                         <html lang="en">
 
@@ -49,17 +50,22 @@ class Request {
                                 <h1>MY TEAM</h1>
                             </header>
 
-                            
+                            <div class="card">
+                                ${request.generateCard(teamArray)}
+                            </div>
 
+                            <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
                             <script src="../index.js"></script>
                         </body>
-                        </html>`
+                        </html>`, (err) =>
+                        err ? console.log(err) : console.log('Success!')
+                    );
 
-                    if (html) {
-                        fs.writeFile('index.html', html, (err) =>
-                            err ? console.log(err) : console.log('Success!')
-                        );
-                    }
+                    // if (html) {
+                    //     fs.writeFile('index.html', html, (err) =>
+                    //         err ? console.log(err) : console.log('Success!')
+                    //     );
+                    // }
 
                 } else {
                     
@@ -141,12 +147,73 @@ class Request {
                         ])
                         .then(function(data) {
                             
-                            const intern = new Intern(...employeeArray, data.github);
+                            const intern = new Intern(...employeeArray, data.school);
                             teamArray.push(intern);
                             request.choicePrompt();
                         })
                 }
             })
+    }
+
+    generateCard(teamArray) {
+
+        for (let i = 0; i < teamArray.length; i++) {
+    
+            var card = $('.card');
+            
+            var headingDiv = $('<div>');
+            headingDiv.addClass('heading');
+            card.append(headingDiv);
+    
+            var headingTwo = $('<h2>');
+            headingTwo.addClass('name');
+            headingTwo.text(teamArray[i].name);
+            headingDiv.append(headingTwo);
+    
+            var headingThree = $('<h3>');
+            headingThree.addClass('role');
+            headingThree.text(getRole());
+            headingDiv.append(headingThree);
+    
+            var hr = $('<hr>');
+            card.append(hr);
+    
+            var contentDiv = $('<div>');
+            contentDiv.addClass('content');
+            card.append(contentDiv);
+    
+            var paragraphOne = $('<p>');
+            paragraphOne.addClass('id');
+            paragraphOne.text(`ID : ${teamArray[i].id}`);
+            contentDiv.append(paragraphOne);
+    
+            var paragraphTwo = $('<p>');
+            paragraphTwo.addClass('email');
+            paragraphTwo.text(`Email : ${teamArray[i].email}`);
+            contentDiv.append(paragraphTwo);
+    
+            if (teamArray[i].getRole() === "Manager") {
+    
+                var paragraphThree = $('<p>');
+                paragraphThree.addClass('ogs');
+                paragraphThree.text(`Office Number : ${teamArray[i].officeNumber}`);
+                contentDiv.append(paragraphThree);
+    
+            } else if (teamArray[i].getRole() === "Engineer") {
+    
+                var paragraphThree = $('<p>');
+                paragraphThree.addClass('ogs');
+                paragraphThree.text(`Github : ${teamArray[i].github}`);
+                contentDiv.append(paragraphThree);
+    
+            } else if (teamArray[i].getRole() === "Intern") {
+    
+                var paragraphThree = $('<p>');
+                paragraphThree.addClass('ogs');
+                paragraphThree.text(`School : ${teamArray[i].school}`);
+                contentDiv.append(paragraphThree);
+            }
+        }
     }
 }
 
