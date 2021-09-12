@@ -5,8 +5,9 @@ const Employee = require('./lib/employee');
 const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
+const Card = require('./dist/script');
 
-const teamArray = [];
+var teamArray = [];
 var choice = '';
 
 class Request {
@@ -26,8 +27,32 @@ class Request {
 
                 if (data.choice === 'No More Employees To Add') {
 
+                    console.log(teamArray);
 
-                    fs.writeFile('index.html', `<!DOCTYPE html>
+                    const justDoIt = true;
+
+                    // Promise
+                    const generateCard = new Promise((resolve, reject) => {
+    
+                        if (justDoIt) {
+                           
+                            const card = new Card(teamArray);
+                            card.generateCard();
+                            console.log(card);
+                            const cardStrings = JSON.stringify(card);
+                            console.log(cardStrings);
+                            resolve(cardStrings);
+
+                        } else {
+                            const issue = new Error('Error');
+                            reject(issue);
+                        }
+                    });
+
+                    generateCard
+                    .then(function(cardStrings) {
+
+                        fs.writeFile('index.html', `<!DOCTYPE html>
 
                         <html lang="en">
 
@@ -51,15 +76,16 @@ class Request {
                             </header>
 
                             <div class="card">
-                                ${request.generateCard(teamArray)}
+                                ${cardStrings}
                             </div>
 
                             <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
                             <script src="../index.js"></script>
                         </body>
                         </html>`, (err) =>
-                        err ? console.log(err) : console.log('Success!')
-                    );
+                        err ? console.log(err) : console.log('Success!'))
+                    })
+                    // .catch((err) => console.error(err));
 
                     // if (html) {
                     //     fs.writeFile('index.html', html, (err) =>
@@ -130,8 +156,8 @@ class Request {
                         .then(function(data) {
                             
                             const engineer = new Engineer(...employeeArray, data.github);
-                            console.log(engineer);
                             teamArray.push(engineer);
+                            console.log(teamArray)
                             request.choicePrompt();
                         })
 
@@ -154,68 +180,9 @@ class Request {
                 }
             })
     }
-
-    generateCard(teamArray) {
-
-        for (let i = 0; i < teamArray.length; i++) {
-    
-            var card = $('.card');
-            
-            var headingDiv = $('<div>');
-            headingDiv.addClass('heading');
-            card.append(headingDiv);
-    
-            var headingTwo = $('<h2>');
-            headingTwo.addClass('name');
-            headingTwo.text(teamArray[i].name);
-            headingDiv.append(headingTwo);
-    
-            var headingThree = $('<h3>');
-            headingThree.addClass('role');
-            headingThree.text(getRole());
-            headingDiv.append(headingThree);
-    
-            var hr = $('<hr>');
-            card.append(hr);
-    
-            var contentDiv = $('<div>');
-            contentDiv.addClass('content');
-            card.append(contentDiv);
-    
-            var paragraphOne = $('<p>');
-            paragraphOne.addClass('id');
-            paragraphOne.text(`ID : ${teamArray[i].id}`);
-            contentDiv.append(paragraphOne);
-    
-            var paragraphTwo = $('<p>');
-            paragraphTwo.addClass('email');
-            paragraphTwo.text(`Email : ${teamArray[i].email}`);
-            contentDiv.append(paragraphTwo);
-    
-            if (teamArray[i].getRole() === "Manager") {
-    
-                var paragraphThree = $('<p>');
-                paragraphThree.addClass('ogs');
-                paragraphThree.text(`Office Number : ${teamArray[i].officeNumber}`);
-                contentDiv.append(paragraphThree);
-    
-            } else if (teamArray[i].getRole() === "Engineer") {
-    
-                var paragraphThree = $('<p>');
-                paragraphThree.addClass('ogs');
-                paragraphThree.text(`Github : ${teamArray[i].github}`);
-                contentDiv.append(paragraphThree);
-    
-            } else if (teamArray[i].getRole() === "Intern") {
-    
-                var paragraphThree = $('<p>');
-                paragraphThree.addClass('ogs');
-                paragraphThree.text(`School : ${teamArray[i].school}`);
-                contentDiv.append(paragraphThree);
-            }
-        }
-    }
 }
 
 const request = new Request();
 request.choicePrompt();
+
+module.exports = Request
