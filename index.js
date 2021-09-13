@@ -5,7 +5,7 @@ const Employee = require('./lib/employee');
 const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
-const Card = require('./dist/script');
+const generateCard = require('./card');
 
 var teamArray = [];
 var choice = '';
@@ -27,71 +27,39 @@ class Request {
 
                 if (data.choice === 'No More Employees To Add') {
 
-                    console.log(teamArray);
+                    // console.log(teamArray);
 
-                    const justDoIt = true;
+                    // const justDoIt = true;
 
-                    // Promise
-                    const generateCard = new Promise((resolve, reject) => {
+                    // // Promise
+                    // const generateCard = new Promise((resolve, reject) => {
     
-                        if (justDoIt) {
+                    //     if (justDoIt) {
                            
-                            const card = new Card(teamArray);
-                            card.generateCard();
-                            console.log(card);
-                            const cardStrings = JSON.stringify(card);
-                            console.log(cardStrings);
-                            resolve(cardStrings);
+                    //         const card = new Card(teamArray)
+                    //         card.generateCard(teamArray);
+                    //         console.log(card);
+                    //         // const cardStrings = JSON.stringify(card);
+                    //         // console.log(cardStrings);
+                    //         resolve(card);
 
-                        } else {
-                            const issue = new Error('Error');
-                            reject(issue);
-                        }
-                    });
+                    //     } else {
+                    //         const issue = new Error('Error');
+                    //         reject(issue);
+                    //     }
+                    // });
 
-                    generateCard
-                    .then(function(cardStrings) {
+                    // generateCard
+                    // .then(function(card) {
 
-                        fs.writeFile('index.html', `<!DOCTYPE html>
-
-                        <html lang="en">
-
-                        <head>
-
-                            <meta charset="UTF-8">
-
-                            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-                            <link rel="stylesheet" href="./style.css">
-
-                            <title>Team Profile</title>
-
-                        </head>
-
-                        <body>
-                            <header>
-                                <h1>MY TEAM</h1>
-                            </header>
-
-                            <div class="card">
-                                ${cardStrings}
-                            </div>
-
-                            <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-                            <script src="../index.js"></script>
-                        </body>
-                        </html>`, (err) =>
-                        err ? console.log(err) : console.log('Success!'))
-                    })
+                    //     fs.writeFile('index.html', , (err) =>
+                    //     err ? console.log(err) : console.log('Success!'))
+                    // })
                     // .catch((err) => console.error(err));
 
-                    // if (html) {
-                    //     fs.writeFile('index.html', html, (err) =>
-                    //         err ? console.log(err) : console.log('Success!')
-                    //     );
-                    // }
+                    fs.writeFile('index.html', generateCard(teamArray), (err) =>
+                        err ? console.log(err) : console.log('Success!')
+                    );
 
                 } else {
                     
@@ -157,7 +125,7 @@ class Request {
                             
                             const engineer = new Engineer(...employeeArray, data.github);
                             teamArray.push(engineer);
-                            console.log(teamArray)
+                            // console.log(teamArray)
                             request.choicePrompt();
                         })
 
