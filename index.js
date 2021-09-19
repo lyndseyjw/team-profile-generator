@@ -27,36 +27,6 @@ class Request {
 
                 if (data.choice === 'No More Employees To Add') {
 
-                    // console.log(teamArray);
-
-                    // const justDoIt = true;
-
-                    // // Promise
-                    // const generateCard = new Promise((resolve, reject) => {
-    
-                    //     if (justDoIt) {
-                           
-                    //         const card = new Card(teamArray)
-                    //         card.generateCard(teamArray);
-                    //         console.log(card);
-                    //         // const cardStrings = JSON.stringify(card);
-                    //         // console.log(cardStrings);
-                    //         resolve(card);
-
-                    //     } else {
-                    //         const issue = new Error('Error');
-                    //         reject(issue);
-                    //     }
-                    // });
-
-                    // generateCard
-                    // .then(function(card) {
-
-                    //     fs.writeFile('index.html', , (err) =>
-                    //     err ? console.log(err) : console.log('Success!'))
-                    // })
-                    // .catch((err) => console.error(err));
-
                     fs.writeFile('index.html', generateCard(teamArray), (err) =>
                         err ? console.log(err) : console.log('Success!')
                     );
